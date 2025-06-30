@@ -1,6 +1,9 @@
 :root {
   --color-text: #242424;
   --color-blue: #599cd3;
+  --color-blue-light: #c3e0f8;
+  --color-blue-dark: #226aa5;
+  --color-background: #fff;
 }
 
 #root {

@@ -1,0 +1,40 @@
+.button,
+.button_secondary {
+  box-sizing: border-box;
+  width: fit-content;
+  cursor: pointer;
+  outline: none;
+  background-color: inherit;
+  border: none;
+}
+
+.button {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-blue);
+
+  &:hover {
+    padding: 9px 10px;
+    background-color: var(--color-blue-light);
+    border: 2px solid var(--color-blue);
+    border-radius: 10px;
+  }
+}
+
+.arrow {
+  padding-left: 2px;
+  rotate: 90deg;
+}
+
+.button_secondary {
+  font-weight: 600;
+  color: var(--color-blue-dark);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
