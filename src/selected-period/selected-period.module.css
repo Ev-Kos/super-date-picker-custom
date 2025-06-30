@@ -1,0 +1,32 @@
+.selected,
+.values_wrap,
+.value_end_wrap {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.values_wrap,
+.values_wrap_empty {
+  box-sizing: border-box;
+  justify-content: center;
+  min-width: 150px;
+  border-bottom: 2px solid var(--color-blue);
+}
+
+.values_wrap_empty {
+  height: 24px;
+}
+
+.value {
+  font-size: 14px;
+}
+
+.arrow {
+  color: var(--color-blue);
+}
