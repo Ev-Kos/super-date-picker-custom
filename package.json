@@ -13,7 +13,8 @@
     "stylelint:fix": "stylelint \"src/**/*.css\" --fix",
     "format": "prettier --write .",
     "check": "npm run stylelint:fix && npm run lint:fix && npm run format",
-    "pre-commit": "npm run check"
+    "pre-commit": "npm run check",
+    "prepare": "husky"
   },
   "dependencies": {
     "react": "^19.1.0",
