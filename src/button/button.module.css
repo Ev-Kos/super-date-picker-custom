@@ -18,10 +18,14 @@
   border-bottom: 2px solid var(--color-blue);
 
   &:hover {
-    padding: 9px 10px;
+    padding: 8px;
     background-color: var(--color-blue-light);
     border: 2px solid var(--color-blue);
     border-radius: 10px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
   }
 }
 

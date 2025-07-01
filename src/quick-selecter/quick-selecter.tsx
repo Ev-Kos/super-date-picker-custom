@@ -1,9 +1,10 @@
-import { useState, type Dispatch, type SetStateAction } from 'react';
+import { useMemo, type Dispatch, type SetStateAction } from 'react';
 
 import { Background } from '../background/background';
 import { Button } from '../button/button';
+import { SELECTER } from '../super-date-picker/super-date-picker';
 
-import styles from './quick-select.module.css';
+import styles from './quick-selecter.module.css';
 
 type TOption = {
   label: string;
@@ -15,17 +16,23 @@ type TSelect = {
   options: TOption[];
   setStart: Dispatch<SetStateAction<string>>;
   setEnd: Dispatch<SetStateAction<string>>;
+  setActiveSelecter: Dispatch<SetStateAction<string>>;
+  activeSelecter: string;
 };
 
-export const QuickSelect = ({ options, setStart, setEnd }: TSelect) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+export const QuickSelecter = ({
+  options,
+  setStart,
+  setEnd,
+  setActiveSelecter,
+  activeSelecter,
+}: TSelect) => {
   const onOpen = () => {
-    setIsOpen(!isOpen);
+    setActiveSelecter(SELECTER.quick);
   };
 
   const onClose = () => {
-    setIsOpen(false);
+    setActiveSelecter('');
   };
 
   const onClick = (item: TOption) => {
@@ -33,10 +40,16 @@ export const QuickSelect = ({ options, setStart, setEnd }: TSelect) => {
     setEnd(item.end);
   };
 
+  const isDisabled = useMemo(() => {
+    return activeSelecter !== SELECTER.quick && activeSelecter.length !== 0;
+  }, [activeSelecter]);
+
   return (
     <div className={styles.quick_select}>
-      <Button onClick={onOpen}>Quick</Button>
-      {isOpen && (
+      <Button onClick={onOpen} disabled={isDisabled}>
+        Быстрый доступ
+      </Button>
+      {activeSelecter === SELECTER.quick && (
         <Background onClose={onClose}>
           {options.map((item, index) => (
             <Button type="button" view="secondary" key={index} onClick={() => onClick(item)}>

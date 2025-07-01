@@ -4,6 +4,7 @@
   --color-blue-light: #c3e0f8;
   --color-blue-dark: #226aa5;
   --color-background: #fff;
+  --color-grey: #cbcbcc;
 }
 
 #root {
@@ -24,6 +25,8 @@ body {
 }
 
 h1,
-p {
+p,
+ul {
+  padding: 0;
   margin: 0;
 }

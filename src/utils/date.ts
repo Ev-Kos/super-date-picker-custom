@@ -39,5 +39,5 @@ export const parseTimeString = (str: string): string => {
     return dayjs(s);
   };
 
-  return parseInternal(str).format('DD.MM.YYYY HH:mm:ss');
+  return str.length !== 0 ? parseInternal(str).format('DD.MM.YYYY HH:mm') : '';
 };
