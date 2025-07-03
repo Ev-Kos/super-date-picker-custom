@@ -45,6 +45,8 @@ export const DatesSelecter = ({
   const onClose = () => {
     setActiveSelecter('');
     setValue([null, null]);
+    setStartTime('');
+    setEndTime('');
   };
 
   const handleCalendarChange = (newValue: Value) => {
@@ -80,9 +82,9 @@ export const DatesSelecter = ({
   );
 
   const disabledTime = useMemo(() => {
-    if (!start && !end) return true;
-    return start?.length === 0 && end?.length === 0;
-  }, [start, end]);
+    if (Array.isArray(value) && !value[0]) return true;
+    return false;
+  }, [value]);
 
   const isDisabled = useMemo(() => {
     return activeSelecter !== SELECTER.dates && activeSelecter.length !== 0;
@@ -107,7 +109,10 @@ export const DatesSelecter = ({
               <p className={styles.time_title}>Начало:</p>
               <ul className={disabledTime ? styles.time_list_disabled : styles.time_list}>
                 {time.map((item, index) => (
-                  <li className={startTime === item ? styles.time_active : styles.time} key={index}>
+                  <li
+                    className={startTime.slice(0, 5) === item ? styles.time_active : styles.time}
+                    key={index}
+                  >
                     <Button view="secondary" onClick={() => onSelectTime(item, value, 0)}>
                       {item}
                     </Button>
@@ -119,7 +124,10 @@ export const DatesSelecter = ({
               <p className={styles.time_title}>Конец:</p>
               <ul className={disabledTime ? styles.time_list_disabled : styles.time_list}>
                 {time.map((item, index) => (
-                  <li className={endTime === item ? styles.time_active : styles.time} key={index}>
+                  <li
+                    className={endTime.slice(0, 5) === item ? styles.time_active : styles.time}
+                    key={index}
+                  >
                     <Button view="secondary" onClick={() => onSelectTime(item, value, 1)}>
                       {item}
                     </Button>

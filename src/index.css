@@ -7,6 +7,8 @@
   --color-grey: #cbcbcc;
   --color-green: #489963;
   --color-green-light: #b1ecc5;
+  --color-shadow: rgb(0 0 0 / 0.12);
+  --color-shadow-light: rgb(0 0 0 / 0.1);
 }
 
 #root {

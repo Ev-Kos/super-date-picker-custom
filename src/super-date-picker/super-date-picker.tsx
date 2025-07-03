@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { SelectedPeriod } from '../selected-period/selected-period';
 import { QuickSelecter } from '../quick-selecter/quick-selecter';
 import { quickSelect } from '../utils/data';
-import { parseTimeString } from '../utils/date';
+import { parseTime } from '../utils/parseTime';
 import { DatesSelecter } from '../dates-selecter/dates-selecter';
 import { RelativeSelecter } from '../relative-selecter/relative-selecter';
 import { Button } from '../button/button';
@@ -27,7 +27,7 @@ export const SuperDatePicker = () => {
   return (
     <section className={styles.container}>
       <div className={styles.select_wrap}>
-        <SelectedPeriod start={parseTimeString(start)} end={parseTimeString(end)} />
+        <SelectedPeriod start={parseTime(start)} end={parseTime(end)} />
         <Button view="apply" disabled={isDisabled}>
           Применить
         </Button>

@@ -5,16 +5,16 @@ import styles from './select.module.css';
 export type TOption = {
   label: string;
   value: string;
-  end: string;
 };
 
 type SelectProps = {
   options: TOption[];
   value?: TOption | null;
   onChange?: (value: TOption) => void;
+  label: string;
 };
 
-export const Select = ({ options, value = null, onChange }: SelectProps) => {
+export const Select = ({ options, value = null, onChange, label }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<TOption | null>(value);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -91,7 +91,7 @@ export const Select = ({ options, value = null, onChange }: SelectProps) => {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        <div className={styles.value}>{selectedValue?.label}</div>
+        <div className={styles.value}>{label}</div>
         <p className={styles.arrow}>&gt;</p>
       </button>
 

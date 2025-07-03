@@ -7,6 +7,15 @@ import { Background } from '../background/background';
 import { InputNumber } from '../input-number/input-number';
 import { Select, type TOption } from '../select/select';
 import { relativeSelect } from '../utils/data';
+import {
+  getDayLabel,
+  getHourLabel,
+  getMinuteLabel,
+  getMonthLabel,
+  getSecondLabel,
+  getWeekLabel,
+  getYearLabel,
+} from '../utils/parseTime';
 
 import styles from './relative-selecter.module.css';
 
@@ -29,11 +38,11 @@ export const RelativeSelecter = ({
     if (end && end.length === 0) {
       setEnd('now');
     }
-  }, [end]);
+  }, [end, setActiveSelecter, setEnd]);
 
   const onClose = useCallback(() => {
     setActiveSelecter('');
-  },[]);
+  }, [setActiveSelecter]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -48,6 +57,22 @@ export const RelativeSelecter = ({
     }
   }, [value, selected]);
 
+  const label = useMemo(() => {
+    return selected?.label === 'Дней назад'
+      ? getDayLabel(Number(value))
+      : selected?.label === 'Часов назад'
+        ? getHourLabel(Number(value))
+        : selected?.label === 'Месяцев назад'
+          ? getMonthLabel(Number(value))
+          : selected?.label === 'Лет назад'
+            ? getYearLabel(Number(value))
+            : selected?.label === 'Недель назад'
+              ? getWeekLabel(Number(value))
+              : selected?.label === 'Минут назад'
+                ? getMinuteLabel(Number(value))
+                : getSecondLabel(Number(value));
+  }, [selected, value]);
+
   return (
     <div className={styles.relative_selecter}>
       <Button onClick={onOpen} disabled={isDisabled}>
@@ -57,7 +82,12 @@ export const RelativeSelecter = ({
         <Background onClose={onClose}>
           <div className={styles.inputs}>
             <InputNumber onChange={onChange} value={value} />
-            <Select options={relativeSelect} value={selected} onChange={setSelected} />
+            <Select
+              options={relativeSelect}
+              value={selected}
+              onChange={setSelected}
+              label={label}
+            />
           </div>
         </Background>
       )}

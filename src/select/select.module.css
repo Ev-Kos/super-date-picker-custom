@@ -35,7 +35,7 @@
   list-style-type: none;
   background-color: var(--color-background);
   border-radius: 0 0 5px 5px;
-  box-shadow: 0 0 8px rgb(0 0 0 / 0.12);
+  box-shadow: 0 0 8px var(--color-shadow);
 }
 
 .option,

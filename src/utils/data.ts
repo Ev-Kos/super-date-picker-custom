@@ -57,36 +57,29 @@ export const relativeSelect = [
   {
     label: 'Секунд назад',
     value: 's',
-    end: 'now',
   },
   {
     label: 'Минут назад',
     value: 'm',
-    end: 'now',
   },
   {
     label: 'Часов назад',
     value: 'h',
-    end: 'now',
   },
   {
     label: 'Дней назад',
     value: 'd',
-    end: 'now',
   },
   {
     label: 'Недель назад',
     value: 'w',
-    end: 'now',
   },
   {
     label: 'Месяцев назад',
     value: 'M',
-    end: 'now',
   },
   {
     label: 'Лет назад',
     value: 'y',
-    end: 'now',
   },
 ];
