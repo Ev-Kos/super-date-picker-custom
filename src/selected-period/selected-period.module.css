@@ -6,16 +6,21 @@
   align-items: center;
 }
 
+.selected {
+  width: 500px;
+}
+
 .title {
   font-size: 16px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .values_wrap,
 .values_wrap_empty {
   box-sizing: border-box;
   justify-content: center;
-  min-width: 150px;
+  width: 100%;
   border-bottom: 2px solid var(--color-blue);
 }
 

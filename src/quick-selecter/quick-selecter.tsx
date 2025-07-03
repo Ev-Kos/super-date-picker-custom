@@ -1,8 +1,9 @@
-import { useMemo, type Dispatch, type SetStateAction } from 'react';
+import { useMemo } from 'react';
 
 import { Background } from '../background/background';
 import { Button } from '../button/button';
-import { SELECTER } from '../super-date-picker/super-date-picker';
+import type { TSelecter } from '../utils/types';
+import { SELECTER } from '../utils/constants';
 
 import styles from './quick-selecter.module.css';
 
@@ -12,13 +13,9 @@ type TOption = {
   end: string;
 };
 
-type TSelect = {
+type TQuickSelecter = {
   options: TOption[];
-  setStart: Dispatch<SetStateAction<string>>;
-  setEnd: Dispatch<SetStateAction<string>>;
-  setActiveSelecter: Dispatch<SetStateAction<string>>;
-  activeSelecter: string;
-};
+} & TSelecter;
 
 export const QuickSelecter = ({
   options,
@@ -26,7 +23,7 @@ export const QuickSelecter = ({
   setEnd,
   setActiveSelecter,
   activeSelecter,
-}: TSelect) => {
+}: TQuickSelecter) => {
   const onOpen = () => {
     setActiveSelecter(SELECTER.quick);
   };

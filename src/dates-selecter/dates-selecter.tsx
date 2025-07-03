@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import type { Value } from 'react-calendar/dist/shared/types.js';
@@ -13,18 +6,10 @@ import type { Value } from 'react-calendar/dist/shared/types.js';
 import { Button } from '../button/button';
 import { Background } from '../background/background';
 import { time } from '../utils/data';
-import { SELECTER } from '../super-date-picker/super-date-picker';
+import type { TSelecter } from '../utils/types';
+import { SELECTER } from '../utils/constants';
 
 import styles from './dates-selecter.module.css';
-
-type TDatesSelecter = {
-  start: string;
-  end: string;
-  setStart: Dispatch<SetStateAction<string>>;
-  setEnd: Dispatch<SetStateAction<string>>;
-  setActiveSelecter: Dispatch<SetStateAction<string>>;
-  activeSelecter: string;
-};
 
 export const DatesSelecter = ({
   start,
@@ -33,27 +18,25 @@ export const DatesSelecter = ({
   setEnd,
   setActiveSelecter,
   activeSelecter,
-}: TDatesSelecter) => {
-  const startDate = useMemo(() => (start.length ? new Date(start) : new Date()), [start]);
+}: TSelecter) => {
+  const startDate = useMemo(() => (start && start.length ? new Date(start) : new Date()), [start]);
 
-  const endDate = useMemo(() => (end.length ? new Date(end) : new Date()), [end]);
+  const endDate = useMemo(() => (end && end.length ? new Date(end) : new Date()), [end]);
 
   const [value, setValue] = useState<Value>([startDate, endDate]);
 
-  const [startTime, setStartTime] = useState<string>(() => startDate.toTimeString().slice(0, 5));
+  const [startTime, setStartTime] = useState<string>(() => startDate.toTimeString().slice(0, 9));
 
-  const [endTime, setEndTime] = useState<string>(() => endDate.toTimeString().slice(0, 5));
+  const [endTime, setEndTime] = useState<string>(() => endDate.toTimeString().slice(0, 9));
 
   useEffect(() => {
-    setStartTime(startDate.toTimeString().slice(0, 5));
-    if (endDate.toTimeString().slice(0, 5).includes('59')) {
-      setEndTime(time[0]);
+    setStartTime(startDate.toTimeString().slice(0, 9));
+    if (endDate.toTimeString().slice(0, 9).includes('59')) {
+      setEndTime(`${time[0]}:00`);
     } else {
-      setEndTime(endDate.toTimeString().slice(0, 5));
+      setEndTime(endDate.toTimeString().slice(0, 9));
     }
   }, [startDate, endDate]);
-
-  useEffect(() => {}, [endDate]);
 
   const onOpen = () => {
     setActiveSelecter(SELECTER.dates);
@@ -61,6 +44,7 @@ export const DatesSelecter = ({
 
   const onClose = () => {
     setActiveSelecter('');
+    setValue([null, null]);
   };
 
   const handleCalendarChange = (newValue: Value) => {
@@ -77,17 +61,18 @@ export const DatesSelecter = ({
       if (Array.isArray(value)) {
         const ind = String(value[index]).indexOf(':');
         const startPart = String(value[index]).slice(0, ind - 2);
-        const endPart = String(value[index]).slice(ind + 3);
         if (index === 0) {
+          const endPart = String(value[index]).slice(ind + 3);
           setStart(startPart + item + endPart);
           setStartTime(item);
         } else {
+          const endPart = String(value[index]).slice(ind + 6);
           if (item === time[0]) {
             setEnd(startPart + '23:59' + endPart);
           } else {
             setEnd(startPart + item + endPart);
           }
-          setEndTime(item);
+          setEndTime(`${item}:00`);
         }
       }
     },
@@ -95,7 +80,8 @@ export const DatesSelecter = ({
   );
 
   const disabledTime = useMemo(() => {
-    return start.length === 0 && end.length === 0;
+    if (!start && !end) return true;
+    return start?.length === 0 && end?.length === 0;
   }, [start, end]);
 
   const isDisabled = useMemo(() => {

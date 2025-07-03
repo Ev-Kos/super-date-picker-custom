@@ -1,8 +1,14 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  min-width: 504px;
+  gap: 35px;
+  min-width: 550px;
+}
+
+.select_wrap {
+  display: flex;
+  gap: 25px;
+  align-items: center;
 }
 
 .selecters {

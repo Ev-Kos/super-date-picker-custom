@@ -7,6 +7,9 @@ dayjs.updateLocale('en', {
 });
 
 const UNIT_MAP: Record<string, dayjs.ManipulateType> = {
+  s: 'second',
+  m: 'minute',
+  h: 'hour',
   d: 'day',
   w: 'week',
   M: 'month',
@@ -14,6 +17,8 @@ const UNIT_MAP: Record<string, dayjs.ManipulateType> = {
 } as const;
 
 export const parseTimeString = (str: string): string => {
+  if (str.length === 0) return '';
+
   const parseInternal = (s: string): dayjs.Dayjs => {
     if (s === 'now') return dayjs();
 
@@ -28,16 +33,20 @@ export const parseTimeString = (str: string): string => {
     }
 
     if (s.startsWith('now-')) {
-      const parts = s.split('-')[1].split(/(?<=\d)(?=[a-z])/);
-      const value = Number(parts[0]);
-      const unitRaw = parts[1];
-      const unit = unitRaw in UNIT_MAP ? UNIT_MAP[unitRaw] : (unitRaw as dayjs.ManipulateType);
-
-      return dayjs().subtract(value, unit);
+      const rest = s.substring(4);
+      const match = rest.match(/^(\d+)([a-zA-Z])$/);
+      if (match) {
+        const value = Number(match[1]);
+        const unitRaw = match[2];
+        const unit = unitRaw in UNIT_MAP ? UNIT_MAP[unitRaw] : (unitRaw as dayjs.ManipulateType);
+        return dayjs().subtract(value, unit);
+      }
+      return dayjs('');
     }
 
     return dayjs(s);
   };
 
-  return str.length !== 0 ? parseInternal(str).format('DD.MM.YYYY HH:mm') : '';
+  const result = parseInternal(str);
+  return result.isValid() ? result.format('DD.MM.YYYY HH:mm:ss') : '';
 };
