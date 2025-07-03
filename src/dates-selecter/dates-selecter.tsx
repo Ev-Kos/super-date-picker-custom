@@ -23,7 +23,7 @@ export const DatesSelecter = ({
 
   const endDate = useMemo(() => (end && end.length ? new Date(end) : new Date()), [end]);
 
-  const [value, setValue] = useState<Value>([startDate, endDate]);
+  const [value, setValue] = useState<Value>([null, null]);
 
   const [startTime, setStartTime] = useState<string>(() => startDate.toTimeString().slice(0, 9));
 
@@ -50,6 +50,7 @@ export const DatesSelecter = ({
   };
 
   const handleCalendarChange = (newValue: Value) => {
+    console.log(1)
     if (Array.isArray(newValue)) {
       const [start, end] = newValue as Date[];
       setValue([start, end]);
