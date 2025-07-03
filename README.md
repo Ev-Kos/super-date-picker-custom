@@ -1,9 +1,9 @@
 # Custom Super Data Picker
 
-## Описание проекта
-
-**Функционал**
-- 
+<img src="README_static/main.png" width="550" height="200"/>
+<img src="README_static/quick.png" width="500" height="280"/>
+<img src="README_static/dates.png" width="600" height="520"/>
+<img src="README_static/relative.png" width="560" height="320"/>
 
 
 **Используемые технологии**
